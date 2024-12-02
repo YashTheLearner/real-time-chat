@@ -1,7 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = require("ws");
-const wss = new ws_1.WebSocketServer({ port: 8080 });
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config(); // Load environment variables from .env file
+const port = parseInt(process.env.PORT || "8080"); // Ensure port is a number
+const wss = new ws_1.WebSocketServer({ port: port });
+console.log(`Server started on port ${port}`);
 const rooms = [];
 // wss.on("connection", (ws) => {
 //   ws.on("error", console.error);

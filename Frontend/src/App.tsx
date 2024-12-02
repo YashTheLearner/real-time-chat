@@ -155,7 +155,7 @@ const App = () => {
           </button>
 
           <div className="h-[180px] w-[300px] overflow-hidden flex flex-col items-center border-2 border-white bg-gradient-to-b from-slate-700 to-slate-900 rounded-lg shadow-lg absolute bottom-5">
-  <h1 className="text-2xl font-bold text-white mt-1">Rooms</h1>
+  <h1 className="text-2xl font-bold text-white mt-1">Rooms Online</h1>
   <div className="flex flex-col items-center justify-center space-y-2 mt-3 w-full px-4">
     {rooms.slice(0, 4).map((room, index) => (
       <div key={index} className="bg-zinc-">

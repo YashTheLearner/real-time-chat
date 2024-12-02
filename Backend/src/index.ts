@@ -1,12 +1,15 @@
 import { WebSocketServer, WebSocket, RawData } from "ws";
-
+import dotenv from 'dotenv';
 // Extend WebSocket type to include clientId and name
 interface ExtendedWebSocket extends WebSocket {
   clientId: string;
   name: string;
 }
 
-const wss = new WebSocketServer({ port: 8080 });
+dotenv.config(); // Load environment variables from .env file
+const port = parseInt(process.env.PORT || "8080"); // Ensure port is a number
+const wss = new WebSocketServer({ port: port });
+console.log(`Server started on port ${port}`);
 
 type message = {
   id: number;
