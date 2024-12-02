@@ -11,7 +11,7 @@ const App = () => {
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080");
+    const socket = new WebSocket("https://chat-app6969-7075db5052f2.herokuapp.com/");
     setSocket(socket);
 
     socket.onmessage = (e) => {
