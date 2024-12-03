@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc -b && node ./dist/index.js",
-    "build":"node ./dist/index.js"
+    "build": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,7 @@
   "dependencies": {
     "@types/ws": "^8.5.13",
     "dotenv": "^16.4.5",
+    "https": "^1.0.0",
     "typescript": "^5.7.2",
     "ws": "^8.18.0"
   }

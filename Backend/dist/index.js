@@ -5,10 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = require("ws");
 const dotenv_1 = __importDefault(require("dotenv"));
+const https_1 = __importDefault(require("https"));
+const fs_1 = __importDefault(require("fs"));
 dotenv_1.default.config(); // Load environment variables from .env file
 const port = parseInt(process.env.PORT || "8080"); // Ensure port is a number
-const wss = new ws_1.WebSocketServer({ port: port });
-console.log(`Server started on port ${port}`);
+const server = https_1.default.createServer({
+    cert: fs_1.default.readFileSync('./cert.pem'),
+    key: fs_1.default.readFileSync('./key.pem')
+});
+const wss = new ws_1.WebSocketServer({ server });
+server.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+});
 const rooms = [];
 // wss.on("connection", (ws) => {
 //   ws.on("error", console.error);
@@ -223,7 +231,10 @@ const shutdown = () => {
     // Stop the WebSocket server
     wss.close(() => {
         console.log("WebSocket server closed.");
-        process.exit(0); // Exit the process
+        server.close(() => {
+            console.log("HTTPS server closed.");
+            process.exit(0); // Exit the process
+        });
     });
 };
 // Listen for termination signals

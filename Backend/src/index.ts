@@ -12,8 +12,8 @@ dotenv.config(); // Load environment variables from .env file
 const port = parseInt(process.env.PORT || "8080"); // Ensure port is a number
 
 const server = https.createServer({
-  cert: fs.readFileSync('../cert.pem'),
-  key: fs.readFileSync('../key.pem')
+  cert: fs.readFileSync('./cert.pem'),
+  key: fs.readFileSync('./key.pem')
 });
 
 const wss = new WebSocketServer({ server });
