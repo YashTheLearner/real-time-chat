@@ -1,5 +1,7 @@
 import { WebSocketServer, WebSocket, RawData } from "ws";
 import dotenv from 'dotenv';
+import https from 'https';
+import fs from 'fs';
 // Extend WebSocket type to include clientId and name
 interface ExtendedWebSocket extends WebSocket {
   clientId: string;
@@ -8,8 +10,16 @@ interface ExtendedWebSocket extends WebSocket {
 
 dotenv.config(); // Load environment variables from .env file
 const port = parseInt(process.env.PORT || "8080"); // Ensure port is a number
-const wss = new WebSocketServer({ port: port });
-console.log(`Server started on port ${port}`);
+
+const server = https.createServer({
+  cert: fs.readFileSync('../cert.pem'),
+  key: fs.readFileSync('../key.pem')
+});
+
+const wss = new WebSocketServer({ server });
+server.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});
 
 type message = {
   id: number;
@@ -283,7 +293,10 @@ const shutdown = () => {
   // Stop the WebSocket server
   wss.close(() => {
     console.log("WebSocket server closed.");
-    process.exit(0); // Exit the process
+    server.close(() => {
+      console.log("HTTPS server closed.");
+      process.exit(0); // Exit the process
+    });
   });
 };
 
