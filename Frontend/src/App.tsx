@@ -11,7 +11,7 @@ const App = () => {
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080");
+    const socket = new WebSocket("ws://157.245.96.32:8080/");
     setSocket(socket);
 
     socket.onmessage = (e) => {
