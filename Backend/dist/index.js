@@ -211,3 +211,21 @@ const leaveRoom = (ws, roomId) => {
 const generateId = () => {
     return Math.floor(100000 + Math.random() * 900000).toString(); // Ensures a 6-digit number
 };
+// Graceful Shutdown
+const shutdown = () => {
+    console.log("Shutting down WebSocket server...");
+    // Close all active WebSocket connections
+    wss.clients.forEach((client) => {
+        if (client.readyState === ws_1.WebSocket.OPEN) {
+            client.close(1001, "Server shutting down"); // Close with status code 1001 (Going Away)
+        }
+    });
+    // Stop the WebSocket server
+    wss.close(() => {
+        console.log("WebSocket server closed.");
+        process.exit(0); // Exit the process
+    });
+};
+// Listen for termination signals
+process.on("SIGINT", shutdown); // Handle Ctrl+C (SIGINT)
+process.on("SIGTERM", shutdown); // Handle termination signal (SIGTERM)
