@@ -8,7 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const https_1 = __importDefault(require("https"));
 const fs_1 = __importDefault(require("fs"));
 dotenv_1.default.config(); // Load environment variables from .env file
-const port = parseInt(process.env.PORT || "8080"); // Ensure port is a number
+const port = parseInt(process.env.PORT || "443"); // Ensure port is a number
 const server = https_1.default.createServer({
     cert: fs_1.default.readFileSync('./cert.pem'),
     key: fs_1.default.readFileSync('./key.pem')
