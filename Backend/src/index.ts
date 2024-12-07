@@ -9,9 +9,14 @@ interface ExtendedWebSocket extends WebSocket {
 }
 
 dotenv.config(); // Load environment variables from .env file
-const port = parseInt(process.env.PORT || "443"); // Ensure port is a number
+const port = parseInt(process.env.PORT || "8080"); // Ensure port is 8080
 
-const server = https.createServer();
+// Load SSL certificates
+const server = https.createServer({
+  key: fs.readFileSync('/etc/letsencrypt/live/backend.yashprojects.live/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/backend.yashprojects.live/fullchain.pem'),
+});
+
 
 const wss = new WebSocketServer({ server });
 server.listen(port, () => {

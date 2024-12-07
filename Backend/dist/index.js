@@ -8,10 +8,11 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const https_1 = __importDefault(require("https"));
 const fs_1 = __importDefault(require("fs"));
 dotenv_1.default.config(); // Load environment variables from .env file
-const port = parseInt(process.env.PORT || "443"); // Ensure port is a number
+const port = parseInt(process.env.PORT || "8080"); // Ensure port is 8080
+// Load SSL certificates
 const server = https_1.default.createServer({
-    cert: fs_1.default.readFileSync('./cert.pem'),
-    key: fs_1.default.readFileSync('./key.pem')
+    key: fs_1.default.readFileSync('/etc/letsencrypt/live/backend.yashprojects.live/privkey.pem'),
+    cert: fs_1.default.readFileSync('/etc/letsencrypt/live/backend.yashprojects.live/fullchain.pem'),
 });
 const wss = new ws_1.WebSocketServer({ server });
 server.listen(port, () => {
@@ -139,9 +140,6 @@ const handleMessage = (ws, data) => {
                 break;
             case "leave-room":
                 leaveRoom(ws, parsedMsg.payload.roomId);
-                break;
-            case "send-message":
-                sendMessage(ws, parsedMsg.payload.roomId, parsedMsg.payload.message);
                 break;
             default:
                 ws.send(JSON.stringify({
