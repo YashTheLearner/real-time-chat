@@ -9,7 +9,7 @@ interface ExtendedWebSocket extends WebSocket {
 }
 
 dotenv.config(); // Load environment variables from .env file
-const port = parseInt(process.env.PORT || "8080"); // Ensure port is 8080
+const port = parseInt(process.env.PORT || "443"); // Ensure port is 8080
 
 // Load SSL certificates
 const server = https.createServer({
