@@ -11,10 +11,7 @@ interface ExtendedWebSocket extends WebSocket {
 dotenv.config(); // Load environment variables from .env file
 const port = parseInt(process.env.PORT || "443"); // Ensure port is a number
 
-const server = https.createServer({
-  cert: fs.readFileSync('./cert.pem'),
-  key: fs.readFileSync('./key.pem')
-});
+const server = https.createServer();
 
 const wss = new WebSocketServer({ server });
 server.listen(port, () => {
@@ -179,9 +176,6 @@ const handleMessage = (ws: ExtendedWebSocket, data: RawData) => {
         break;
       case "leave-room":
         leaveRoom(ws, parsedMsg.payload.roomId);
-        break;
-      case "send-message":
-        sendMessage(ws, parsedMsg.payload.roomId, parsedMsg.payload.message);
         break;
       default:
         ws.send(
