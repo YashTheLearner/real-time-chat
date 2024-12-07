@@ -11,7 +11,7 @@ const App = () => {
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    const socket = new WebSocket("wss://wss://backend.yashprojects.live:443/");
+    const socket = new WebSocket("wss://wss://backend.yashprojects.live:8080/");
     setSocket(socket);
 
     socket.onmessage = (e) => {
